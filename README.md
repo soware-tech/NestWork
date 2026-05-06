@@ -8,15 +8,27 @@
     <style>
         body { background-color: #f8fafc; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; transition: all 0.3s ease; }
         
-        /* Modos de Visualização */
+        /* Ajustes de Layout por Modo */
+        body.mode-web .main-grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+        }
+        
+        body.mode-app .main-grid {
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.mode-app .lg-col-span-3, body.mode-app .lg-col-span-9 {
+            width: 100%;
+        }
+
+        /* Comportamento Web: Maximizar visualização */
         body.mode-web .canvas-container {
             max-height: none !important;
             height: auto !important;
+            min-height: calc(100vh - 250px);
             overflow: visible !important;
-        }
-        
-        body.mode-web .lg-col-span-9 {
-            height: auto !important;
         }
 
         .sheet-preview {
@@ -130,7 +142,7 @@
         input[type="number"] { font-size: 14px !important; }
     </style>
 </head>
-<body class="p-2 md:p-4">
+<body class="p-2 md:p-4 mode-app">
 
     <div class="max-w-[1600px] mx-auto">
         <!-- Header Compacto -->
@@ -168,11 +180,11 @@
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div class="main-grid gap-4">
             <!-- Coluna de Controles (Lateral Esquerda) -->
             <div class="lg:col-span-3 space-y-4">
                 
-                <!-- Painel Combinado: Área e Cópia (Ajuste Lateral de 50%) -->
+                <!-- Painel Combinado: Área e Cópia -->
                 <div class="grid grid-cols-2 gap-4">
                     <!-- Área de Trabalho (Esquerda) -->
                     <div class="card-panel">
@@ -209,7 +221,7 @@
                     </div>
                 </div>
 
-                <!-- Painel de Ferramentas de Precisão com campos realocados -->
+                <!-- Painel de Ferramentas de Precisão -->
                 <div class="card-panel">
                     <h2 class="text-[10px] font-black uppercase text-slate-400 mb-4 flex items-center gap-2">
                         <i data-lucide="zap" class="w-3 h-3"></i> Ferramentas de Ajuste
@@ -221,7 +233,6 @@
 
                     <div id="fileDimsDisplay" class="hidden">
                         <div class="grid grid-cols-12 gap-3 mb-4">
-                            <!-- Botões de Ação (Lado Esquerdo) -->
                             <div class="col-span-7 grid grid-cols-2 gap-2">
                                 <button id="fillQtyBtn" onclick="toggleFillQuantity()" class="btn-action bg-slate-100 text-slate-600 hover:bg-orange-100 hover:text-orange-700 border border-slate-200">
                                     <i data-lucide="expand" class="w-3.5 h-3.5"></i> <span class="text-[10px]">Preencher</span>
@@ -237,7 +248,6 @@
                                 </button>
                             </div>
 
-                            <!-- Vetor Unitário (Realocado para a Direita) -->
                             <div class="col-span-5 flex flex-col gap-2">
                                 <div class="bg-slate-50 p-2 rounded border border-slate-100 text-center">
                                     <span class="block text-[8px] font-bold text-slate-400 uppercase">Vetor A</span>
@@ -269,7 +279,6 @@
                             <p class="text-[10px] text-slate-400 font-bold" id="sheetDimLabel">---</p>
                         </div>
                         
-                        <!-- Espaço centralizado para dimensões do arquivo ocupado -->
                         <div class="flex-1 flex justify-center">
                             <div id="occupiedDimsDisplay" class="hidden flex items-center gap-2 px-4 py-1.5 bg-blue-50 border border-blue-100 rounded-full">
                                 <i data-lucide="crop" class="w-3.5 h-3.5 text-blue-500"></i>
@@ -368,9 +377,10 @@
         let lastPlacedCount = 0;   
         const NS_SVG = "http://www.w3.org/2000/svg";
 
-        // Gerenciamento de Visualização
+        // Gerenciamento de Visualização Adaptativa
         function setViewMode(mode) {
             if (mode === 'web') {
+                document.body.classList.remove('mode-app');
                 document.body.classList.add('mode-web');
                 dom.modeWebBtn.classList.add('bg-slate-700', 'text-white');
                 dom.modeWebBtn.classList.remove('text-slate-500');
@@ -378,6 +388,7 @@
                 dom.modeAppBtn.classList.add('text-slate-500');
             } else {
                 document.body.classList.remove('mode-web');
+                document.body.classList.add('mode-app');
                 dom.modeAppBtn.classList.add('bg-slate-700', 'text-white');
                 dom.modeAppBtn.classList.remove('text-slate-500');
                 dom.modeWebBtn.classList.remove('bg-slate-700', 'text-white');
