@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nest Work app</title>
+    <title> </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -21,6 +21,23 @@
 
         body.mode-app .lg-col-span-3, body.mode-app .lg-col-span-9 {
             width: 100%;
+        }
+
+        /* Expansão dos botões no modo Web */
+        body.mode-web .tools-grid {
+            grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+            gap: 0.75rem;
+        }
+
+        body.mode-web .btn-action {
+            padding: 12px 16px;
+            font-size: 14px;
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        body.mode-web .btn-action span {
+            font-size: 12px;
         }
 
         /* Comportamento Web: Maximizar visualização */
@@ -108,12 +125,13 @@
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            gap: 6px; 
+            gap: 8px; 
             font-weight: 700; 
             padding: 8px 12px; 
             border-radius: 6px; 
             font-size: 13px; 
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .input-compact {
@@ -168,7 +186,7 @@
                     <i data-lucide="file-up" class="w-4 h-4"></i> <span>Exportar SVG</span>
                 </button>
 
-                <!-- Botão de Alternância de Modo (Minimalista e Discreto) -->
+                <!-- Botão de Alternância de Modo -->
                 <div class="flex bg-slate-800/50 p-1 rounded-lg border border-slate-700/50 ml-auto md:ml-2">
                     <button onclick="setViewMode('app')" id="modeAppBtn" class="flex items-center gap-1.5 px-2 py-1 rounded text-[9px] font-bold uppercase transition-all bg-slate-700 text-white">
                         App
@@ -181,12 +199,11 @@
         </header>
 
         <div class="main-grid gap-4">
-            <!-- Coluna de Controles (Lateral Esquerda) -->
+            <!-- Coluna de Controles -->
             <div class="lg:col-span-3 space-y-4">
                 
                 <!-- Painel Combinado: Área e Cópia -->
                 <div class="grid grid-cols-2 gap-4">
-                    <!-- Área de Trabalho (Esquerda) -->
                     <div class="card-panel">
                         <h2 class="text-[10px] font-black uppercase text-slate-400 mb-4 flex items-center gap-2">
                             <i data-lucide="maximize" class="w-3 h-3"></i> Área da chapa
@@ -203,7 +220,6 @@
                         </div>
                     </div>
 
-                    <!-- Configuração de Cópia (Direita) -->
                     <div class="card-panel">
                         <h2 class="text-[10px] font-black uppercase text-slate-400 mb-4 flex items-center gap-2">
                             <i data-lucide="layers" class="w-3 h-3"></i> Cópia
@@ -232,29 +248,30 @@
                     </div>
 
                     <div id="fileDimsDisplay" class="hidden">
-                        <div class="grid grid-cols-12 gap-3 mb-4">
-                            <div class="col-span-7 grid grid-cols-2 gap-2">
+                        <div class="flex flex-col gap-3">
+                            <!-- Grid de Botões que se adapta ao modo Web/App -->
+                            <div class="tools-grid grid grid-cols-2 gap-2">
                                 <button id="fillQtyBtn" onclick="toggleFillQuantity()" class="btn-action bg-slate-100 text-slate-600 hover:bg-orange-100 hover:text-orange-700 border border-slate-200">
-                                    <i data-lucide="expand" class="w-3.5 h-3.5"></i> <span class="text-[10px]">Preencher</span>
+                                    <i data-lucide="expand" class="w-4 h-4"></i> <span>Preencher</span>
                                 </button>
                                 <button id="fineTuneBtn" onclick="toggleFineTune()" class="btn-action bg-slate-100 text-slate-600 hover:bg-purple-100 hover:text-purple-700 border border-slate-200">
-                                    <i data-lucide="repeat" class="w-3.5 h-3.5"></i> <span class="text-[10px]">Inverter</span>
+                                    <i data-lucide="repeat" class="w-4 h-4"></i> <span>Inverter</span>
                                 </button>
                                 <button id="rotate90Btn" onclick="cycleRotation()" class="btn-action bg-slate-100 text-slate-600 hover:bg-indigo-100 hover:text-indigo-700 border border-slate-200">
-                                    <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i> <span id="rotateBtnLabel" class="text-[10px]">0°</span>
+                                    <i data-lucide="rotate-cw" class="w-4 h-4"></i> <span id="rotateBtnLabel">Graus: 0°</span>
                                 </button>
                                 <button id="compactBtn" onclick="toggleCompact()" class="btn-action bg-slate-100 text-slate-600 hover:bg-blue-100 hover:text-blue-700 border border-slate-200">
-                                    <i data-lucide="align-justify" class="w-3.5 h-3.5"></i> <span class="text-[10px]">Compactar</span>
+                                    <i data-lucide="align-justify" class="w-4 h-4"></i> <span>Compactar</span>
                                 </button>
                             </div>
 
-                            <div class="col-span-5 flex flex-col gap-2">
+                            <div class="grid grid-cols-2 gap-2 mt-2">
                                 <div class="bg-slate-50 p-2 rounded border border-slate-100 text-center">
-                                    <span class="block text-[8px] font-bold text-slate-400 uppercase">Vetor A</span>
+                                    <span class="block text-[8px] font-bold text-slate-400 uppercase">Vetor Altura mm</span>
                                     <span id="infoItemH" class="text-xs font-black text-slate-700">--</span>
                                 </div>
                                 <div class="bg-slate-50 p-2 rounded border border-slate-100 text-center">
-                                    <span class="block text-[8px] font-bold text-slate-400 uppercase">Vetor L</span>
+                                    <span class="block text-[8px] font-bold text-slate-400 uppercase">Vetor Largura</span>
                                     <span id="infoItemW" class="text-xs font-black text-slate-700">--</span>
                                 </div>
                             </div>
@@ -270,7 +287,7 @@
                 </div>
             </div>
 
-            <!-- Coluna de Preview (Principal) -->
+            <!-- Coluna de Preview -->
             <div class="lg:col-span-9">
                 <div class="card-panel h-full flex flex-col relative overflow-hidden">
                     <div class="flex justify-between items-center mb-3">
@@ -281,9 +298,9 @@
                         
                         <div class="flex-1 flex justify-center">
                             <div id="occupiedDimsDisplay" class="hidden flex items-center gap-2 px-4 py-1.5 bg-blue-50 border border-blue-100 rounded-full">
-                                <i data-lucide="crop" class="w-3.5 h-3.5 text-blue-500"></i>
-                                <span class="text-[10px] font-black text-blue-700 uppercase tracking-wide">
-                                    Espaço Utilizado: <span id="occupiedW">0</span> x <span id="occupiedH">0</span> mm
+                                <i data-lucide="crop" class="w-3.5 h-3.5 text-blue-400"></i>
+                                <span class="text-[10px] font-black text-blue-800 uppercase tracking-wide">
+                                    Área agrupada : <span id="occupiedW">0</span> x <span id="occupiedH">0</span> mm
                                 </span>
                             </div>
                         </div>
@@ -294,7 +311,6 @@
                     </div>
                     
                     <div class="canvas-container" id="scrollContainer">
-                        <!-- Controle de Zoom -->
                         <div class="zoom-control-container">
                             <i data-lucide="plus" class="w-3 h-3 text-slate-400"></i>
                             <input type="range" id="zoomSlider" min="0" max="100" value="0" class="zoom-slider" oninput="handleZoom(this.value)">
@@ -312,7 +328,6 @@
                         </div>
                     </div>
                     
-                    <!-- Footer do Painel de Visualização -->
                     <div class="mt-3 pt-3 border-t border-slate-50 flex flex-wrap gap-4 items-center justify-between">
                         <div class="flex gap-4 items-center">
                             <div class="flex items-center gap-1.5">
@@ -321,11 +336,11 @@
                             </div>
                             <div class="h-4 w-[1px] bg-slate-200"></div>
                             <div id="resultInfo" class="text-[11px] font-black text-slate-700 uppercase font-mono">
-                                0 PEÇAS PROCESSADAS
+                                0 Vetores em processamento
                             </div>
                         </div>
                         <div class="text-[10px] font-bold text-slate-300 uppercase">
-                            NestWork Soware Tech versão 26.1
+                            NestWork Software Tech versão 26.1
                         </div>
                     </div>
                 </div>
@@ -377,7 +392,6 @@
         let lastPlacedCount = 0;   
         const NS_SVG = "http://www.w3.org/2000/svg";
 
-        // Gerenciamento de Visualização Adaptativa
         function setViewMode(mode) {
             if (mode === 'web') {
                 document.body.classList.remove('mode-app');
@@ -439,13 +453,11 @@
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(text, "image/svg+xml");
                 const svgEl = xmlDoc.querySelector('svg');
-                
                 if (!svgEl) throw new Error("Vetor Inválido");
 
                 const attrW = svgEl.getAttribute('width');
                 const viewBoxAttr = svgEl.getAttribute('viewBox');
                 const viewBoxArr = viewBoxAttr ? viewBoxAttr.split(/[\s,]+/).filter(v => v !== "").map(Number) : null;
-                
                 fileScale = 1;
 
                 if (attrW && (attrW.includes('mm') || attrW.includes('cm')) && viewBoxArr) {
@@ -457,11 +469,7 @@
                 const tempSvg = document.createElementNS(NS_SVG, "svg");
                 tempSvg.style.cssText = "position:absolute;top:-9999px;left:-9999px;visibility:hidden;width:5000px;height:5000px;";
                 const g = document.createElementNS(NS_SVG, "g");
-                
-                Array.from(svgEl.childNodes).forEach(n => {
-                    g.appendChild(n.cloneNode(true));
-                });
-
+                Array.from(svgEl.childNodes).forEach(n => g.appendChild(n.cloneNode(true)));
                 tempSvg.appendChild(g);
                 document.body.appendChild(tempSvg);
                 const bbox = g.getBBox();
@@ -472,13 +480,7 @@
                     if (val) fileScale = val / bbox.width;
                 }
 
-                itemSize = { 
-                    w: bbox.width * fileScale, 
-                    h: bbox.height * fileScale,
-                    x: bbox.x,
-                    y: bbox.y
-                };
-                
+                itemSize = { w: bbox.width * fileScale, h: bbox.height * fileScale, x: bbox.x, y: bbox.y };
                 originalNodes = Array.from(g.childNodes).map(n => n.cloneNode(true));
                 isFileLoaded = true;
 
@@ -495,9 +497,7 @@
                 if (placeholder) placeholder.style.display = 'none';
                 
                 generateLayout();
-            } catch (e) {
-                console.error("Erro:", e);
-            }
+            } catch (e) { console.error("Erro:", e); }
         }
 
         function toggleFineTune() {
@@ -508,7 +508,7 @@
 
         function cycleRotation() {
             currentRotation = (currentRotation + 90) % 360;
-            dom.rotateBtnLabel.innerText = `${currentRotation}°`;
+            dom.rotateBtnLabel.innerText = `Graus: ${currentRotation}°`;
             const isActive = currentRotation !== 0;
             updateBtnState(dom.rotate90Btn, isActive, 'bg-indigo-600', 'border-indigo-600');
             generateLayout();
@@ -520,16 +520,13 @@
             updateBtnState(dom.fillQtyBtn, isFillEnabled, 'bg-orange-500', 'border-orange-500');
             
             if (isFillEnabled) {
-                const sw = parseFloat(dom.sheetWidth.value);
-                const sh = parseFloat(dom.sheetHeight.value);
-                const gap = parseFloat(dom.itemPadding.value) || 0;
+                const sw = parseFloat(dom.sheetWidth.value), sh = parseFloat(dom.sheetHeight.value), gap = parseFloat(dom.itemPadding.value) || 0;
                 const isVerticalRotation = currentRotation === 90 || currentRotation === 270;
                 const effItemW = isVerticalRotation ? itemSize.h : itemSize.w;
                 const effItemH = isVerticalRotation ? itemSize.w : itemSize.h;
                 const verticalCompressionFactor = isCompactEnabled ? 0.85 : 1.0;
                 const effectiveRowH = effItemH * verticalCompressionFactor;
-                const usableW = sw - gap;
-                const usableH = sh - gap;
+                const usableW = sw - gap, usableH = sh - gap;
                 let calculatedQty = 0;
                 if (usableW >= effItemW && usableH >= effItemH) {
                     const cols = Math.floor((usableW + gap) / (effItemW + gap));
@@ -537,9 +534,7 @@
                     calculatedQty = Math.max(0, cols * rows);
                 }
                 dom.itemQty.value = calculatedQty;
-            } else {
-                dom.itemQty.value = 1;
-            }
+            } else { dom.itemQty.value = 1; }
             generateLayout();
         }
 
@@ -562,19 +557,15 @@
 
         function generateLayout() {
             if (!isFileLoaded) return;
-            const sw = parseFloat(dom.sheetWidth.value) || 0;
-            const sh = parseFloat(dom.sheetHeight.value) || 0;
-            const targetQty = parseInt(dom.itemQty.value) || 0;
-            const gap = parseFloat(dom.itemPadding.value) || 0;
+            const sw = parseFloat(dom.sheetWidth.value) || 0, sh = parseFloat(dom.sheetHeight.value) || 0;
+            const targetQty = parseInt(dom.itemQty.value) || 0, gap = parseFloat(dom.itemPadding.value) || 0;
             
             dom.preview.innerHTML = "";
             const svg = document.createElementNS(NS_SVG, "svg");
             svg.setAttribute("id", "production-svg");
-            svg.setAttribute("width", sw);
-            svg.setAttribute("height", sh);
+            svg.setAttribute("width", sw); svg.setAttribute("height", sh);
             svg.setAttribute("viewBox", `0 0 ${sw} ${sh}`);
-            svg.style.width = "100%";
-            svg.style.height = "100%";
+            svg.style.width = "100%"; svg.style.height = "100%";
 
             const guide = document.createElementNS(NS_SVG, "rect");
             guide.setAttribute("id", "canvas-border");
@@ -592,8 +583,7 @@
             const itemsPerRow = Math.floor((sw - gap + gap) / (currentItemW + gap));
             const verticalCompressionFactor = isCompactEnabled ? 0.85 : 1.0;
 
-            let maxReachX = 0;
-            let maxReachY = 0;
+            let maxReachX = 0, maxReachY = 0;
 
             for (let i = 0; i < targetQty; i++) {
                 if (cursorX + currentItemW > sw - gap + 0.001) {
@@ -627,7 +617,6 @@
                 
                 maxReachX = Math.max(maxReachX, cursorX + xOffset + currentItemW);
                 maxReachY = Math.max(maxReachY, cursorY + currentItemH);
-
                 cursorX += currentItemW + gap;
                 countPlaced++;
             }
@@ -647,7 +636,7 @@
             const isOk = (countPlaced >= targetQty && targetQty > 0);
             dom.statusBadge.innerText = targetQty === 0 ? "Aguardando" : (isOk ? "Otimizado" : "Limitado");
             dom.statusBadge.className = `px-3 py-1 ${isOk ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-red-50 text-red-600 border-red-100'} rounded-md text-[9px] font-black uppercase border`;
-            dom.resultInfo.innerText = `${countPlaced} PEÇAS PROCESSADAS`;
+            dom.resultInfo.innerText = `${countPlaced} VETORES PROCESSADOS`;
         }
 
         function downloadSVG() {
@@ -657,8 +646,7 @@
             const border = exportClone.getElementById('canvas-border');
             if (border) border.remove();
             const w = dom.sheetWidth.value, h = dom.sheetHeight.value;
-            exportClone.setAttribute("width", `${w}mm`);
-            exportClone.setAttribute("height", `${h}mm`);
+            exportClone.setAttribute("width", `${w}mm`); exportClone.setAttribute("height", `${h}mm`);
             exportClone.setAttribute("viewBox", `0 0 ${w} ${h}`);
             const serializer = new XMLSerializer();
             let svgString = serializer.serializeToString(exportClone);
@@ -666,8 +654,7 @@
             const blob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\r\n` + svgString], {type: 'image/svg+xml'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = url;
-            a.download = `${originalFileName} [${lastPlacedCount}]UNID.svg`;
+            a.href = url; a.download = `${originalFileName} [${lastPlacedCount}]UNID.svg`;
             a.click();
             URL.revokeObjectURL(url);
         }
