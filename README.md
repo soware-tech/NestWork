@@ -325,7 +325,7 @@
                             </div>
                         </div>
                         <div class="text-[10px] font-bold text-slate-300 uppercase">
-                            NestWork Engine v2.5
+                            NestWork Soware Tech versão 26.1
                         </div>
                     </div>
                 </div>
