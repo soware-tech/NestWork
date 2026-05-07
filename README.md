@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title> </title>
+    <title>Nest Work app</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -189,7 +189,7 @@
                     <!-- Área de Trabalho (Esquerda) -->
                     <div class="card-panel">
                         <h2 class="text-[10px] font-black uppercase text-slate-400 mb-4 flex items-center gap-2">
-                            <i data-lucide="maximize" class="w-3 h-3"></i> Área da chapa
+                            <i data-lucide="square-dashed-mouse-pointer" class="w-3 h-3"></i> Área da chapa (mm)
                         </h2>
                         <div class="flex flex-col gap-4">
                             <div>
@@ -206,7 +206,7 @@
                     <!-- Configuração de Cópia (Direita) -->
                     <div class="card-panel">
                         <h2 class="text-[10px] font-black uppercase text-slate-400 mb-4 flex items-center gap-2">
-                            <i data-lucide="layers" class="w-3 h-3"></i> Cópia
+                            <i data-lucide="layers" class="w-3 h-3"></i> Cópias
                         </h2>
                         <div class="flex flex-col gap-4">
                             <div>
@@ -214,7 +214,7 @@
                                 <input type="number" id="itemQty" value="1" min="0" oninput="generateLayout()" class="input-compact text-orange-600">
                             </div>
                             <div>
-                                <label class="block text-[9px] font-bold text-slate-500 uppercase mb-1">Espessura mm</label>
+                                <label class="block text-[9px] font-bold text-slate-500 uppercase mb-1">Espessura (mm)</label>
                                 <input type="number" id="itemPadding" value="1" min="0" oninput="generateLayout()" class="input-compact text-orange-600">
                             </div>
                         </div>
@@ -224,11 +224,11 @@
                 <!-- Painel de Ferramentas de Precisão -->
                 <div class="card-panel">
                     <h2 class="text-[10px] font-black uppercase text-slate-400 mb-4 flex items-center gap-2">
-                        <i data-lucide="zap" class="w-3 h-3"></i> Ferramentas de Ajuste
+                        <i data-lucide="wrench" class="w-3 h-3"></i> Ferramentas de Ajuste para o Agrupamento
                     </h2>
                     
                     <div id="fileDimsEmpty" class="text-center py-4 bg-slate-50 rounded-lg border-2 border-dashed border-slate-100">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase italic">Aguardando Vetor...</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase italic">Aguardando     Vetor...</p>
                     </div>
 
                     <div id="fileDimsDisplay" class="hidden">
@@ -305,7 +305,7 @@
                         <div class="zoom-wrapper" id="zoomWrapper">
                             <div id="sheetPreview" class="sheet-preview">
                                 <div id="placeholder" class="text-center opacity-20 py-20">
-                                    <i data-lucide="image-plus" class="w-16 h-16 mx-auto mb-2 text-slate-300"></i>
+                                    <i data-lucide="file-image" class="w-16 h-16 mx-auto mb-2 text-slate-300"></i>
                                     <p class="font-black uppercase text-xs text-slate-400">Arraste ou importe seu SVG</p>
                                 </div>
                             </div>
